@@ -5,7 +5,7 @@ const info = (options) => {
   console.log('options', options)
   const userInfo = {
     'id': '4291d7da9005377ec9aec4a71ea837f',
-    'name': '天野远子',
+    'name': '陌生人',
     'username': 'admin',
     'password': '',
     'avatar': '/avatar2.jpg',
@@ -379,7 +379,7 @@ const userNav = (options) => {
       'id': 1,
       'meta': {
         'icon': 'dashboard',
-        'title': '仪表盘',
+        'title': '文章列表',
         'show': true
       },
       'component': 'RouteView',
