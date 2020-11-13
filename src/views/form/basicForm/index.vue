@@ -1,7 +1,7 @@
 <template>
   <!-- hidden PageHeaderWrapper title demo -->
   <div>
-    <page-header-wrapper :title="false" content="表单页用于向用户收集或验证信息，基础表单常见于数据项较少的表单场景。">
+    <page-header-wrapper :title="false" content="表单页用于增加文章。">
       <a-card :body-style="{padding: '24px 32px'}" :bordered="false">
         <a-form @submit="handleSubmit" :form="form">
           <a-form-item
@@ -14,92 +14,56 @@
                 {rules: [{ required: true, message: '请输入标题' }]}
               ]"
               name="name"
-              placeholder="给目标起个名字" />
+              placeholder="文章标题" />
           </a-form-item>
           <a-form-item
-            label="起止日期"
+            label="图片"
             :labelCol="{lg: {span: 7}, sm: {span: 7}}"
             :wrapperCol="{lg: {span: 10}, sm: {span: 17} }">
-            <a-range-picker
-              name="buildTime"
-              style="width: 100%"
-              v-decorator="[
-                'buildTime',
-                {rules: [{ required: true, message: '请选择起止日期' }]}
-              ]" />
+          <a-upload
+              name="avatar"
+              list-type="picture-card"
+              class="avatar-uploader"
+              :show-upload-list="false"
+              action="https://www.mocky.io/v2/5cc8019d300000980a055e76"
+              :before-upload="beforeUpload"
+              @change="handleChange"
+            >
+              <img v-if="imageUrl" :src="imageUrl" alt="avatar" />
+              <div v-else>
+                <a-icon :type="loading ? 'loading' : 'plus'" />
+                <div class="ant-upload-text">
+                  Upload
+                </div>
+              </div>
+            </a-upload>
           </a-form-item>
           <a-form-item
-            label="目标描述"
+            label="文章描述"
             :labelCol="{lg: {span: 7}, sm: {span: 7}}"
             :wrapperCol="{lg: {span: 10}, sm: {span: 17} }">
             <a-textarea
               rows="4"
-              placeholder="请输入你阶段性工作目标"
+              placeholder="请输入你的描述"
               v-decorator="[
                 'description',
                 {rules: [{ required: true, message: '请输入目标描述' }]}
               ]" />
           </a-form-item>
-          <a-form-item
-            label="衡量标准"
-            :labelCol="{lg: {span: 7}, sm: {span: 7}}"
-            :wrapperCol="{lg: {span: 10}, sm: {span: 17} }">
-            <a-textarea
-              rows="4"
-              placeholder="请输入衡量标准"
-              v-decorator="[
-                'type',
-                {rules: [{ required: true, message: '请输入衡量标准' }]}
-              ]" />
-          </a-form-item>
-          <a-form-item
-            label="客户"
-            :labelCol="{lg: {span: 7}, sm: {span: 7}}"
-            :wrapperCol="{lg: {span: 10}, sm: {span: 17} }">
-            <a-input
-              placeholder="请描述你服务的客户，内部客户直接 @姓名／工号"
-              v-decorator="[
-                'customer',
-                {rules: [{ required: true, message: '请描述你服务的客户' }]}
-              ]" />
-          </a-form-item>
-          <a-form-item
-            label="邀评人"
-            :labelCol="{lg: {span: 7}, sm: {span: 7}}"
-            :wrapperCol="{lg: {span: 10}, sm: {span: 17} }"
-            :required="false"
-          >
-            <a-input placeholder="请直接 @姓名／工号，最多可邀请 5 人" />
-          </a-form-item>
-          <a-form-item
-            label="权重"
-            :labelCol="{lg: {span: 7}, sm: {span: 7}}"
-            :wrapperCol="{lg: {span: 10}, sm: {span: 17} }"
-            :required="false"
-          >
-            <a-input-number :min="0" :max="100" />
-            <span> %</span>
-          </a-form-item>
-          <a-form-item
-            label="目标公开"
-            :labelCol="{lg: {span: 7}, sm: {span: 7}}"
-            :wrapperCol="{lg: {span: 10}, sm: {span: 17} }"
-            :required="false"
-            help="客户、邀评人默认被分享"
-          >
-            <a-radio-group v-decorator="['target', { initialValue: 1 }]">
-              <a-radio :value="1">公开</a-radio>
-              <a-radio :value="2">部分公开</a-radio>
-              <a-radio :value="3">不公开</a-radio>
-            </a-radio-group>
-            <a-form-item v-show="form.getFieldValue('target') === 2">
-              <a-select mode="multiple">
-                <a-select-option value="4">同事一</a-select-option>
-                <a-select-option value="5">同事二</a-select-option>
-                <a-select-option value="6">同事三</a-select-option>
-              </a-select>
-            </a-form-item>
-          </a-form-item>
+
+          <div>内容</div>
+          <div :class="prefixCls">
+            <quill-editor
+              v-model="content"
+              ref="myQuillEditor"
+              :options="editorOption"
+              @blur="onEditorBlur($event)"
+              @focus="onEditorFocus($event)"
+              @ready="onEditorReady($event)"
+              @change="onEditorChange($event)">
+            </quill-editor>
+          </div>
+
           <a-form-item
             :wrapperCol="{ span: 24 }"
             style="text-align: center"
@@ -110,17 +74,7 @@
         </a-form>
       </a-card>
     </page-header-wrapper>
-    <div :class="prefixCls">
-      <quill-editor
-        v-model="content"
-        ref="myQuillEditor"
-        :options="editorOption"
-        @blur="onEditorBlur($event)"
-        @focus="onEditorFocus($event)"
-        @ready="onEditorReady($event)"
-        @change="onEditorChange($event)">
-      </quill-editor>
-    </div>
+
   </div>
 </template>
 
@@ -129,6 +83,11 @@
   import 'quill/dist/quill.snow.css'
   import 'quill/dist/quill.bubble.css'
   import { quillEditor } from 'vue-quill-editor'
+  function getBase64 (img, callback) {
+    const reader = new FileReader()
+    reader.addEventListener('load', () => callback(reader.result))
+    reader.readAsDataURL(img)
+  }
 export default {
   name: 'BaseForm',
   components: {
@@ -149,6 +108,8 @@ export default {
     return {
       form: this.$form.createForm(this),
       content: null,
+      loading: false,
+      imageUrl: '',
       editorOption: {
         // some quill options
       }
@@ -163,6 +124,30 @@ export default {
           console.log('Received values of form: ', values)
         }
       })
+    },
+    handleChange (info) {
+      if (info.file.status === 'uploading') {
+        this.loading = true
+        return
+      }
+      if (info.file.status === 'done') {
+        // Get this url from response in real world.
+        getBase64(info.file.originFileObj, imageUrl => {
+          this.imageUrl = imageUrl
+          this.loading = false
+        })
+      }
+    },
+    beforeUpload (file) {
+      const isJpgOrPng = file.type === 'image/jpeg' || file.type === 'image/png'
+      if (!isJpgOrPng) {
+        this.$message.error('You can only upload JPG file!')
+      }
+      const isLt2M = file.size / 1024 / 1024 < 2
+      if (!isLt2M) {
+        this.$message.error('Image must smaller than 2MB!')
+      }
+      return isJpgOrPng && isLt2M
     },
     onEditorBlur (quill) {
       console.log('editor blur!', quill)

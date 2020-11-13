@@ -179,27 +179,27 @@ const activity = () => {
 const teams = () => {
   return builder([{
     id: 1,
-    name: '科学搬砖组',
+    name: '工地搬砖组',
     avatar: 'https://gw.alipayobjects.com/zos/rmsportal/BiazfanxmamNRoxxVxka.png'
   },
   {
     id: 2,
-    name: '程序员日常',
+    name: '大大怪将军',
     avatar: 'https://gw.alipayobjects.com/zos/rmsportal/cnrhVkzwxjPwAaCfPbdc.png'
   },
   {
     id: 1,
-    name: '设计天团',
+    name: '王者小学生',
     avatar: 'https://gw.alipayobjects.com/zos/rmsportal/gaOngJwsRYRaVAuXXcmB.png'
   },
   {
     id: 1,
-    name: '中二少女团',
+    name: '爬虫小菜鸡',
     avatar: 'https://gw.alipayobjects.com/zos/rmsportal/ubnKSIfAJTxIgXOKlciN.png'
   },
   {
     id: 1,
-    name: '骗你学计算机',
+    name: '睡眠大师',
     avatar: 'https://gw.alipayobjects.com/zos/rmsportal/WhxKECPNujWoWEFNdnJE.png'
   }
   ])

@@ -23,30 +23,13 @@ export const asyncRouterMap = [
         component: () => import('../views/list/search/Projects'),
         meta: { title: '文章列表', permission: [ 'table' ] }
       },
-
       // profile
       {
         path: '/profile',
         name: 'profile',
-        component: RouteView,
-        redirect: '/profile/basic',
-        meta: { title: '详情页', icon: 'profile', permission: [ 'profile' ] },
-        children: [
-          {
-            path: '/profile/basic',
-            name: 'ProfileBasic',
-            component: () => import('@/views/profile/basic'),
-            meta: { title: '基础详情页', permission: [ 'profile' ] }
-          },
-          {
-            path: '/profile/advanced',
-            name: 'ProfileAdvanced',
-            component: () => import('@/views/profile/advanced/Advanced'),
-            meta: { title: '高级详情页', permission: [ 'profile' ] }
-          }
-        ]
+        component: () => import('../views/profile/basic'),
+        meta: { title: '文章详情', permission: [ 'profile' ] }
       },
-
       // account
       {
         path: '/account',
@@ -79,31 +62,32 @@ export const asyncRouterMap = [
                 path: '/form/base-form',
                 component: () => import('@/views/form/basicForm'),
                 meta: { title: '增加文章', keepAlive: true, permission: [ 'form' ] }
-              },
-              {
-                path: '/account/settings/security',
-                name: 'SecuritySettings',
-                component: () => import('@/views/account/settings/Security'),
-                meta: { title: '安全设置', hidden: true, keepAlive: true, permission: [ 'user' ] }
-              },
-              {
-                path: '/account/settings/custom',
-                name: 'CustomSettings',
-                component: () => import('@/views/account/settings/Custom'),
-                meta: { title: '个性化设置', hidden: true, keepAlive: true, permission: [ 'user' ] }
-              },
-              {
-                path: '/account/settings/binding',
-                name: 'BindingSettings',
-                component: () => import('@/views/account/settings/Binding'),
-                meta: { title: '账户绑定', hidden: true, keepAlive: true, permission: [ 'user' ] }
-              },
-              {
-                path: '/account/settings/notification',
-                name: 'NotificationSettings',
-                component: () => import('@/views/account/settings/Notification'),
-                meta: { title: '新消息通知', hidden: true, keepAlive: true, permission: [ 'user' ] }
               }
+              // ,
+              // {
+              //   path: '/account/settings/security',
+              //   name: 'SecuritySettings',
+              //   component: () => import('@/views/account/settings/Security'),
+              //   meta: { title: '安全设置', hidden: true, keepAlive: true, permission: [ 'user' ] }
+              // }
+              // {
+              //   path: '/account/settings/custom',
+              //   name: 'CustomSettings',
+              //   component: () => import('@/views/account/settings/Custom'),
+              //   meta: { title: '个性化设置', hidden: true, keepAlive: true, permission: [ 'user' ] }
+              // },
+              // {
+              //   path: '/account/settings/binding',
+              //   name: 'BindingSettings',
+              //   component: () => import('@/views/account/settings/Binding'),
+              //   meta: { title: '账户绑定', hidden: true, keepAlive: true, permission: [ 'user' ] }
+              // },
+              // {
+              //   path: '/account/settings/notification',
+              //   name: 'NotificationSettings',
+              //   component: () => import('@/views/account/settings/Notification'),
+              //   meta: { title: '新消息通知', hidden: true, keepAlive: true, permission: [ 'user' ] }
+              // }
             ]
           }
         ]
