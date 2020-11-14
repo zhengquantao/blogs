@@ -20,7 +20,7 @@
             label="图片"
             :labelCol="{lg: {span: 7}, sm: {span: 7}}"
             :wrapperCol="{lg: {span: 10}, sm: {span: 17} }">
-          <a-upload
+            <a-upload
               name="avatar"
               list-type="picture-card"
               class="avatar-uploader"
@@ -50,7 +50,6 @@
                 {rules: [{ required: true, message: '请输入目标描述' }]}
               ]" />
           </a-form-item>
-
           <div>内容</div>
           <div :class="prefixCls">
             <quill-editor
@@ -63,7 +62,6 @@
               @change="onEditorChange($event)">
             </quill-editor>
           </div>
-
           <a-form-item
             :wrapperCol="{ span: 24 }"
             style="text-align: center"
@@ -74,15 +72,14 @@
         </a-form>
       </a-card>
     </page-header-wrapper>
-
   </div>
 </template>
-
 <script>
   import 'quill/dist/quill.core.css'
   import 'quill/dist/quill.snow.css'
   import 'quill/dist/quill.bubble.css'
   import { quillEditor } from 'vue-quill-editor'
+  // import {axios} from "../../../utils/request";
   function getBase64 (img, callback) {
     const reader = new FileReader()
     reader.addEventListener('load', () => callback(reader.result))
@@ -121,6 +118,9 @@ export default {
       e.preventDefault()
       this.form.validateFields((err, values) => {
         if (!err) {
+            values.image = this.imageUrl
+            values.content = this.content
+            // axios.post({})
           console.log('Received values of form: ', values)
         }
       })
